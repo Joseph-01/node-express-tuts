@@ -1,9 +1,27 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
+require("dotenv").config()
 
-const uri =
-  "mongodb+srv://node-express-tuts:joseph123@node-express-tuts.1zmxw.mongodb.net/03-task-manager?retryWrites=true&w=majority";
+//connection to database
+const connectDB = (conectionUrl) => {
+    mongoose.connect(conectionUrl, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
+    }).then(() => console.log("connecting")).catch((err) => console.log(err))
+}
 
-mongoose
-  .connect(uri, { useNewUrlParser: true })
-  .then(() => console.log("connected todatabase"))
-  .catch((err) => console.log(err));
+//checking the connection and starting it
+const startConnection = async (listen) => {
+    try {
+        await connectDB(process.env.MONGO_URI)
+    } catch (error) {
+        console.log(error)
+
+    }
+}
+
+module.exports = {
+    startConnection
+}
+
