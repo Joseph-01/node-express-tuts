@@ -1,4 +1,5 @@
-// const res = require("express/lib/response");
+//use our task model
+const Task = require("../models/TaskModel")
 
 const getAllTasks = (req, res) => {
   res.send("all items");
@@ -8,10 +9,9 @@ const getTaskById = (req, res) => {
   res.send("id items");
 }
 
-const createNewTask = (req, res) => {
-
-  // res.json({"hello":"create task 201"})
-  res.send(req.body)
+const createNewTask = async (req, res) => {
+  const task = await Task.create(req.body)
+  res.status(201).json({task})
 }
 
 
